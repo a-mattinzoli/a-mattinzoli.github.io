@@ -1,4 +1,4 @@
-/* Reset di base */
+/* Reset di base per eliminare i margini predefiniti dei browser */
 * {
     margin: 0;
     padding: 0;
@@ -6,49 +6,75 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Variabili Colore richieste */
+/* Definizione delle variabili colore richieste */
 :root {
-    --primary-navy: #1B365D;    /* Blu Navy */
+    --primary-navy: #1B365D;    /* Blu Navy ereditato dallo screen dell'header */
     --text-anthracite: #333333; /* Antracite */
     --accent-orange: #D35400;   /* Arancio Scuro */
-    --bg-light: #F8F9FA;        /* Sfondo chiaro per contrasto */
-    --white: #FFFFFF;
+    --bg-light: #F8F9FA;        /* Sfondo chiaro per le pagine */
+    --white: #FFFFFF;           /* Bianco per i contenitori */
+    --footer-dark: #222222;     /* Colore scuro per la striscia del footer */
 }
 
+/* Stile globale del corpo della pagina */
 body {
     background-color: var(--bg-light);
     color: var(--text-anthracite);
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Barra di Navigazione */
+/* =========================================
+   BARRA DI NAVIGAZIONE (METODO GRIGLIA RIGIDA)
+   ========================================= */
 header {
     background-color: var(--primary-navy);
-    padding: 1rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
+    padding: 12px 2rem; /* Spazio fisso sopra e sotto la barra */
 }
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: table; /* Trasforma la navbar in una tabella rigida */
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
 
+/* Cella di sinistra: Contiene il Logo */
 .logo {
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle; /* Allineamento millimetrico al centro */
+    text-align: left;
 }
 
+.logo a {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo-img {
+    height: 35px; /* Altezza fissa del logo am */
+    width: auto;
+    display: block;
+}
+
+/* Cella di destra: Contiene il Menu */
 .nav-links {
+    display: table-cell;
+    vertical-align: middle; /* Blocca le scritte e il bottone alla stessa identica altezza del logo */
+    text-align: right;      /* Spinge il menu tutto a destra */
     list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+}
+
+/* Forza i singoli elementi della lista a stare affiancati senza andare a capo */
+.nav-links li {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 2rem; /* Spazio orizzontale tra le voci del menu */
 }
 
 .nav-links a {
@@ -56,30 +82,38 @@ nav {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1; /* Rimuove lo spazio extra ereditato dal body */
 }
 
 .nav-links a:hover {
     color: var(--accent-orange);
 }
 
-/* Pulsante Scarica CV nella Navbar */
+/* Pulsante Scarica CV */
 .btn-cv {
     background-color: var(--accent-orange);
     color: var(--white) !important;
-    padding: 0.5rem 1.2rem;
+    padding: 8px 16px; /* Crea la sagoma rettangolare del bottone */
     border-radius: 4px;
     transition: background-color 0.3s !important;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .btn-cv:hover {
-    background-color: #A04000; /* Arancio più scuro al passaggio del mouse */
+    background-color: #A04000;
 }
 
-/* Layout Contenuto Principale */
+/* =========================================
+   CONTENUTO PRINCIPALE (MAIN)
+   ========================================= */
 main {
     max-width: 800px;
     margin: 3rem auto;
     padding: 0 2rem;
+    flex: 1; 
 }
 
 section {
@@ -90,21 +124,19 @@ section {
     margin-bottom: 2rem;
 }
 
-h1, h2 {
+h1, h2, h3 {
     color: var(--primary-navy);
     margin-bottom: 1rem;
 }
 
-h1 {
-    font-size: 2.5rem;
-}
+h1 { font-size: 2.3rem; }
+h2 { font-size: 1.6rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; margin-top: 1.5rem; }
+h3 { font-size: 1.2rem; margin-bottom: 0.2rem; }
+h4 { color: #666; font-weight: 500; margin-bottom: 0.5rem; }
+p { margin-bottom: 1rem; }
+ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+li { margin-bottom: 0.4rem; }
 
-p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-}
-
-/* Stili specifici per la pagina Percorso (Timeline semplice) */
 .timeline-item {
     border-left: 3px solid var(--accent-orange);
     padding-left: 1.5rem;
@@ -127,12 +159,42 @@ p {
     font-weight: bold;
     color: var(--accent-orange);
     font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.2rem;
 }
 
-/* Footer */
-footer {
+.cv-info-box {
+    background-color: #FFF3EB;
+    border-left: 4px solid var(--accent-orange);
+    padding: 1.5rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 2.5rem;
     text-align: center;
-    padding: 2rem;
-    color: #777;
+}
+
+.cv-info-box p {
+    margin-bottom: 0.8rem;
+    font-weight: bold;
+}
+
+.cv-info-box .btn-inline-cv {
+    color: var(--accent-orange);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cv-info-box .btn-inline-cv:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+footer {
+    background-color: var(--footer-dark);
+    color: #DDDDDD;
+    text-align: center;
+    padding: 1.5rem 2rem;
     font-size: 0.9rem;
+    width: 100%;
 }
